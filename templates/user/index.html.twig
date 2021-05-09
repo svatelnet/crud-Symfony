@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Пользователи{% endblock %}
+
+{% block body %}
+    <h1>Список пользователей</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Email</th>
+                <th>Роль</th>
+                <th>Пароль</th>
+                <th>Редактировать</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                <td>{{ user.password }}</td>
+                <td>
+                    <a href="{{ path('user_show', {'id': user.id}) }}">Просмотреть</a>
+                    <a href="{{ path('user_edit', {'id': user.id}) }}">Редактировать</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Пока нет зарегистрированных пользователей :(</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('user_new') }}">Создать нового пользователя</a>
+{% endblock %}
+{% block javascript %}
+        <script src="{{ asset('assets/vendor/jquery/dist/jquery.min.js')  }}"></script>
+        <script src="{{ asset('js/app.js') }}"></script>
+{% endblock %}
